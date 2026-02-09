@@ -1,72 +1,55 @@
 import streamlit as st
-import joblib
-import re
-import nltk
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+import pickle
+from preprocessing import clean   # use your existing clean() function
 
-# ===============================
-# Page Config
-# ===============================
-st.set_page_config(page_title="Flipkart Sentiment Analyzer")
+# Page config
+st.set_page_config(
+    page_title="Spam Email Classifier",
+    page_icon="📧",
+    layout="centered"
+)
 
-# ===============================
-# Download NLTK (only once)
-# ===============================
-@st.cache_resource
-def load_nltk():
-    nltk.download("stopwords")
-    nltk.download("wordnet")
+# Title
+st.title("📧 Spam Email Classifier")
+st.write("Enter an email message to check whether it is **Spam** or **Ham (Not Spam)**.")
 
-load_nltk()
-
-# ===============================
-# Load Model + Vectorizer (CACHED)
-# ===============================
+# Load trained model
 @st.cache_resource
 def load_model():
-    model = joblib.load("sentiment_model.pkl")
-    vectorizer = joblib.load("tfidf_vectorizer.pkl")
-    return model, vectorizer
+    with open("spam_email_model.pkl", "rb") as f:
+        return pickle.load(f)
 
-model, vectorizer = load_model()
+model = load_model()
 
-# ===============================
-# Text Preprocessing
-# ===============================
-stop_words = set(stopwords.words("english"))
-lemmatizer = WordNetLemmatizer()
+# Text input
+email_text = st.text_area(
+    "✉️ Email Text",
+    height=180,
+    placeholder="Paste the email content here..."
+)
 
-def clean_text(text):
-    text = str(text).lower()
-    text = re.sub(r"[^a-zA-Z]", " ", text)
-
-    words = text.split()
-    words = [w for w in words if w not in stop_words]
-    words = [lemmatizer.lemmatize(w) for w in words]
-
-    return " ".join(words)
-
-# ===============================
-# Streamlit UI
-# ===============================
-st.title("🛒 Flipkart Product Review Sentiment Analysis")
-st.write("Enter a review to detect whether it is Positive or Negative.")
-
-review = st.text_area("Enter Review Text")
-
-if st.button("Predict Sentiment"):
-
-    if review.strip() == "":
-        st.warning("Please enter a review")
-
+# Predict button
+if st.button("🔍 Predict"):
+    if email_text.strip() == "":
+        st.warning("⚠️ Please enter some email text")
     else:
-        with st.spinner("Analyzing sentiment..."):
-            cleaned = clean_text(review)
-            vec = vectorizer.transform([cleaned])
-            prediction = model.predict(vec)[0]
+        cleaned_text = clean(email_text)
+        prediction = model.predict([cleaned_text])[0]
 
-        if prediction == 1:
-            st.success("✅ Positive Review 😊")
+        if prediction.lower() == "spam":
+            st.error("🚨 This email is **SPAM**")
         else:
-            st.error("❌ Negative Review 😞")
+            st.success("✅ This email is **HAM (Not Spam)**")
+
+        # Optional: show cleaned text
+        with st.expander("🔎 View cleaned text"):
+            st.write(cleaned_text)
+
+# Sidebar info
+st.sidebar.header("ℹ️ About")
+st.sidebar.write("""
+- **Model**: Naive Bayes  
+- **Vectorizer**: TF-IDF  
+- **Use Case**: Spam Email Detection  
+- **Built with**: Python & Streamlit
+""")
