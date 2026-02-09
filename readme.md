@@ -1,35 +1,24 @@
-# 🚀 Flipkart Sentiment Analysis using MLflow & Prefect (MLOps Project)
+# 🚀 Flipkart Sentiment Analysis – MLOps Project
 
-## 📌 Project Overview
-This project demonstrates how to integrate **MLflow** for experiment tracking and model management into a real-world machine learning pipeline.  
-The system performs **Sentiment Analysis** on Flipkart product reviews and showcases practical **MLOps workflows**, including experiment tracking, hyperparameter comparison, model registry, and workflow automation using **Prefect**.
-
-The objective was to move beyond traditional model training and build a **reproducible and scalable ML pipeline**.
-
----
+## 📌 Overview
+This project implements an end-to-end **Sentiment Analysis** pipeline on Flipkart product reviews, focusing on **real-world MLOps practices**. It integrates **MLflow** for experiment tracking and model management, and **Prefect** for workflow automation, with a **Streamlit** web app for predictions.
 
 ## 🎯 Key Features
-- ✅ Experiment tracking using **MLflow**
-- ✅ Logging parameters, metrics, and artifacts
-- ✅ Custom run naming and organized experiment UI
-- ✅ Metric visualization and hyperparameter comparison
-- ✅ Model Registry with versioning and tagging
-- ✅ Automated workflow orchestration using **Prefect**
-- ✅ Streamlit-based sentiment analysis web application
-
----
+- MLflow experiment tracking (params, metrics, artifacts)
+- Model comparison and visualization
+- Model Registry with versioning
+- Automated pipelines using Prefect
+- Streamlit-based sentiment analysis app
 
 ## 🧠 Tech Stack
-- Python
-- Scikit-learn
-- MLflow
-- Prefect
-- Streamlit
-- Pandas & NumPy
-- TF-IDF Vectorizer
-- Logistic Regression
-
----
+- Python  
+- Scikit-learn  
+- MLflow  
+- Prefect  
+- Streamlit  
+- Pandas, NumPy  
+- TF-IDF Vectorizer  
+- Logistic Regression  
 
 ## 📂 Project Structure
 ```
@@ -87,7 +76,7 @@ python train_mlflow.py
 
 ---
 
-## 🔄 Prefect Workflow (Automation)
+## 🔄 Run Prefect Workflow
 
 Start Prefect Server:
 ```
@@ -131,9 +120,9 @@ Enter a Flipkart review and the system predicts:
 ## 💡 Learning Outcomes
 This project helped me understand real-world **MLOps practices**, including:
 
-- Managing ML experiments efficiently
-- Comparing model performance visually
-- Automating ML pipelines
+- Hands-on experience with MLflow & Prefect
+- Experiment tracking and model lifecycle management
+- Automating ML workflows using MLOps tools
 - Organizing model lifecycle using MLflow Registry
 
 ---
@@ -156,4 +145,4 @@ If you find this project useful, feel free to connect and collaborate!
 ---
 
 ## ⭐ Acknowledgements
-Special thanks to the internship program for providing hands-on exposure to MLflow, Prefect, and modern MLOps workflows.
+Thanks to the internship program for hands-on exposure to modern MLOps workflows.
